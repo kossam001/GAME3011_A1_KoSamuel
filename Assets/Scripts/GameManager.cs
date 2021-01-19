@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject uiResourceGrid;
 
     public int gridSize;
+    public int numDeposits;
 
     List<List<Resource>> resourceGrid;
 
@@ -35,6 +36,45 @@ public class GameManager : MonoBehaviour
             }
 
             resourceGrid.Add(resourceRow);
+        }
+
+        SetResourceTiles();
+    }
+
+    private void SetResourceTiles()
+    {
+        for (int i = 0; i < numDeposits; i++)
+        {
+            int row = Random.Range(0, gridSize - 1);
+            int col = Random.Range(0, gridSize - 1);
+
+            resourceGrid[row][col].InitResource(1);
+
+            for (int j = row - 1; j <= row + 1; j++)
+            {
+                for (int k = col - 1; k <= col + 1; k++)
+                {
+                    float resourceValue = 0.5f;
+
+                    if (j >= 0 && k >= 0 && resourceValue > resourceGrid[j][k].resourceAmount)
+                    {
+                        resourceGrid[j][k].InitResource(resourceValue);
+                    }
+                }
+            }
+
+            for (int j = row - 2; j <= row + 2; j++)
+            {
+                for (int k = col - 2; k <= col + 2; k++)
+                {
+                    float resourceValue = 0.25f;
+
+                    if (j >= 0 && k >= 0 && resourceValue > resourceGrid[j][k].resourceAmount)
+                    {
+                        resourceGrid[j][k].InitResource(resourceValue);
+                    }
+                }
+            }
         }
     }
 

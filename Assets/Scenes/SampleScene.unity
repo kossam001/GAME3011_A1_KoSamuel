@@ -243,6 +243,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 1721965986616250965, guid: 4f10f5010454d33478e128c7e707fe65, type: 3}
   uiResourceGrid: {fileID: 1827349541}
   gridSize: 32
+  numDeposits: 6
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
