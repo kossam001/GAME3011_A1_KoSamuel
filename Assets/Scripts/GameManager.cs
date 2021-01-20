@@ -46,27 +46,56 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < numDeposits; i++)
         {
-            float resourceRatio = 1.0f;
             int row = Random.Range(0, gridSize - 1);
             int col = Random.Range(0, gridSize - 1);
 
-            for (int layer = 0; layer < depositSize; layer++)
+            SetSurroundingResourceTiles(row, col);
+        }
+    }
+
+    public void SetSurroundingResourceTiles(int row, int col)
+    {
+        float resourceRatio = 1.0f;
+
+        for (int layer = 0; layer < depositSize; layer++)
+        {
+            for (int j = row - layer; j <= row + layer; j++)
             {
-                for (int j = row - layer; j <= row + layer; j++)
+                for (int k = col - layer; k <= col + layer; k++)
                 {
-                    for (int k = col - layer; k <= col + layer; k++)
+                    if (j >= 0 && k >= 0 &&
+                        j < gridSize && k < gridSize &&
+                        resourceRatio > resourceGrid[j][k].resourceAmount)
                     {
-                        if (j >= 0 && k >= 0 &&
-                            j < gridSize && k < gridSize &&
-                            resourceRatio > resourceGrid[j][k].resourceAmount)
-                        {
-                            resourceGrid[j][k].InitResource(resourceRatio);
-                        }
+                        resourceGrid[j][k].SetPosition(new Vector2(j, k));
+                        resourceGrid[j][k].SetResource(resourceRatio);
                     }
                 }
-
-                resourceRatio *= 0.5f;
             }
+
+            resourceRatio *= 0.5f;
+        }
+    }
+
+    public void DecrementSurroundingResourceTiles(int row, int col)
+    {
+        float resourceRatio = 1.0f;
+
+        for (int layer = 0; layer < depositSize; layer++)
+        {
+            for (int j = row - layer; j <= row + layer; j++)
+            {
+                for (int k = col - layer; k <= col + layer; k++)
+                {
+                    if (j >= 0 && k >= 0 &&
+                        j < gridSize && k < gridSize)
+                    {
+                        resourceGrid[j][k].SetResource(resourceRatio * resourceGrid[j][k].resourceAmount);
+                    }
+                }
+            }
+
+            resourceRatio *= 0.5f;
         }
     }
 

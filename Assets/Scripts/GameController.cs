@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
 {
+    public GameManager gameManager;
+
     // Graphic Raycaster code from https://docs.unity3d.com/2017.3/Documentation/ScriptReference/UI.GraphicRaycaster.Raycast.html
     GraphicRaycaster m_Raycaster;
     PointerEventData m_PointerEventData;
@@ -35,7 +37,14 @@ public class GameController : MonoBehaviour
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                Debug.Log(result.gameObject.name);
+                if (result.gameObject.GetComponent<Resource>())
+                {
+                    Resource resource = result.gameObject.GetComponent<Resource>();
+
+                    Vector2 resourcePosition = resource.DecrementResource();
+
+                    gameManager.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
+                }
             }
         }
 

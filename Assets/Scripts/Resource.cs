@@ -9,9 +9,22 @@ public class Resource : MonoBehaviour
     public float resourceAmount { get; set; }
     public Vector2 tilePosition;
 
-    public void InitResource(float value)
+    public void SetPosition(Vector2 position)
+    {
+        tilePosition = position;
+    }
+
+    public void SetResource(float value)
     {
         resourceAmount = value;
         GetComponent<Image>().color = new Color(value, value, 0);
+    }
+
+    public Vector2 DecrementResource()
+    {
+        resourceAmount = 0;
+        GetComponent<Image>().color = new Color(0, 0, 0);
+
+        return tilePosition;
     }
 }
