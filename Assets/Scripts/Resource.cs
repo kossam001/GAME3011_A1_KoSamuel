@@ -21,7 +21,6 @@ public class Resource : MonoBehaviour
         colourGradient = gradientValue;
 
         GetComponent<Image>().color = new Color(gradientValue, gradientValue, 0);
-        Debug.Log(gradientValue);
     }
 
     public Vector2 DecrementResource()

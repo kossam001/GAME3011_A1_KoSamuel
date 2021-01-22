@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject tilePrefab;
     public GameObject uiResourceGrid;
-    public GameObject uiScore;
+    public TMP_Text uiScore;
 
     public int gridSize;
     public int numDeposits;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     public void SetSurroundingResourceTiles(int row, int col)
     {
+        float gradientRatio = 1.0f;
         float resourceRatio = 1.0f;
 
         for (int layer = 0; layer < depositSize; layer++)
@@ -69,20 +71,22 @@ public class GameManager : MonoBehaviour
                 {
                     if (j >= 0 && k >= 0 &&
                         j < gridSize && k < gridSize &&
-                        resourceRatio > resourceGrid[j][k].colourGradient)
+                        gradientRatio > resourceGrid[j][k].colourGradient)
                     {
                         resourceGrid[j][k].SetPosition(new Vector2(j, k));
-                        resourceGrid[j][k].SetResource(resourceRatio, maxResourceAmount * resourceRatio);
+                        resourceGrid[j][k].SetResource(gradientRatio, maxResourceAmount * resourceRatio);
                     }
                 }
             }
 
-            resourceRatio *= 0.9f;
+            resourceRatio *= 0.5f;
+            gradientRatio *= 0.9f;
         }
     }
 
     public void DecrementSurroundingResourceTiles(int row, int col)
     {
+        float gradientRatio = 1.0f;
         float resourceRatio = 1.0f;
 
         for (int layer = 0; layer < depositSize; layer++)
@@ -94,17 +98,19 @@ public class GameManager : MonoBehaviour
                     if (j >= 0 && k >= 0 &&
                         j < gridSize && k < gridSize)
                     {
-                        resourceGrid[j][k].SetResource(resourceRatio * resourceGrid[j][k].colourGradient, resourceRatio * resourceGrid[j][k].resourceAmount);
+                        resourceGrid[j][k].SetResource(gradientRatio * resourceGrid[j][k].colourGradient, resourceRatio * resourceGrid[j][k].resourceAmount);
                     }
                 }
             }
 
-            resourceRatio *= 0.9f;
+            resourceRatio *= 0.5f;
+            gradientRatio *= 0.9f;
         }
     }
 
-    public void AddScore(int score)
+    public void AddScore(int _score)
     {
-
+        score += _score;
+        uiScore.text = score.ToString();
     }
 }

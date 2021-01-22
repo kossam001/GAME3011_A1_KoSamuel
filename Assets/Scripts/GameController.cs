@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour
                 if (result.gameObject.GetComponent<Resource>())
                 {
                     Resource resource = result.gameObject.GetComponent<Resource>();
-
+                    gameManager.AddScore((int)resource.resourceAmount);
                     Vector2 resourcePosition = resource.DecrementResource();
 
                     gameManager.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
