@@ -246,6 +246,7 @@ MonoBehaviour:
   gridSize: 32
   numDeposits: 10
   depositSize: 6
+  maxResourceAmount: 2000
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

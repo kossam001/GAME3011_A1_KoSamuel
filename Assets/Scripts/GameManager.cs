@@ -6,10 +6,14 @@ public class GameManager : MonoBehaviour
 {
     public GameObject tilePrefab;
     public GameObject uiResourceGrid;
+    public GameObject uiScore;
 
     public int gridSize;
     public int numDeposits;
     public int depositSize;
+    public int maxResourceAmount;
+
+    public int score;
 
     List<List<Resource>> resourceGrid;
 
@@ -65,15 +69,15 @@ public class GameManager : MonoBehaviour
                 {
                     if (j >= 0 && k >= 0 &&
                         j < gridSize && k < gridSize &&
-                        resourceRatio > resourceGrid[j][k].resourceAmount)
+                        resourceRatio > resourceGrid[j][k].colourGradient)
                     {
                         resourceGrid[j][k].SetPosition(new Vector2(j, k));
-                        resourceGrid[j][k].SetResource(resourceRatio);
+                        resourceGrid[j][k].SetResource(resourceRatio, maxResourceAmount * resourceRatio);
                     }
                 }
             }
 
-            resourceRatio *= 0.5f;
+            resourceRatio *= 0.9f;
         }
     }
 
@@ -90,18 +94,17 @@ public class GameManager : MonoBehaviour
                     if (j >= 0 && k >= 0 &&
                         j < gridSize && k < gridSize)
                     {
-                        resourceGrid[j][k].SetResource(resourceRatio * resourceGrid[j][k].resourceAmount);
+                        resourceGrid[j][k].SetResource(resourceRatio * resourceGrid[j][k].colourGradient, resourceRatio * resourceGrid[j][k].resourceAmount);
                     }
                 }
             }
 
-            resourceRatio *= 0.5f;
+            resourceRatio *= 0.9f;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddScore(int score)
     {
-        
+
     }
 }

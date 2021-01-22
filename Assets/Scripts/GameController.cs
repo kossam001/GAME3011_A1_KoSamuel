@@ -47,6 +47,5 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-
     }
 }

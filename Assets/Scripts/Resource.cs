@@ -7,6 +7,7 @@ public class Resource : MonoBehaviour
 {
     public Sprite resourceSprite;
     public float resourceAmount { get; set; }
+    public float colourGradient { get; set; }
     public Vector2 tilePosition;
 
     public void SetPosition(Vector2 position)
@@ -14,15 +15,20 @@ public class Resource : MonoBehaviour
         tilePosition = position;
     }
 
-    public void SetResource(float value)
+    public void SetResource(float gradientValue, float resourceValue)
     {
-        resourceAmount = value;
-        GetComponent<Image>().color = new Color(value, value, 0);
+        resourceAmount = resourceValue;
+        colourGradient = gradientValue;
+
+        GetComponent<Image>().color = new Color(gradientValue, gradientValue, 0);
+        Debug.Log(gradientValue);
     }
 
     public Vector2 DecrementResource()
     {
         resourceAmount = 0;
+        colourGradient = 0;
+
         GetComponent<Image>().color = new Color(0, 0, 0);
 
         return tilePosition;
