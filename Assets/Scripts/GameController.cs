@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class GameController : MonoBehaviour
 {
     public GameManager gameManager;
+    public ResourceGrid resourceGrid;
 
     // Graphic Raycaster code from https://docs.unity3d.com/2017.3/Documentation/ScriptReference/UI.GraphicRaycaster.Raycast.html
     GraphicRaycaster m_Raycaster;
@@ -43,7 +44,7 @@ public class GameController : MonoBehaviour
                     gameManager.AddScore((int)resource.resourceAmount);
                     Vector2 resourcePosition = resource.DecrementResource();
 
-                    gameManager.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
+                    resourceGrid.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
                 }
             }
         }
