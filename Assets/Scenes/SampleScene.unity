@@ -1221,9 +1221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43f72efc84db3547bfbaa5065841eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 0}
-  uiResourceGrid: {fileID: 0}
+  tilePrefab: {fileID: 1721965986616250965, guid: 4f10f5010454d33478e128c7e707fe65, type: 3}
   gridSize: 32
   numDeposits: 10
-  depositSize: 6
+  depositSize: 3
   maxResourceAmount: 2000
