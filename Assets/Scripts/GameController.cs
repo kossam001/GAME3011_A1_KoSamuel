@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public ResourceGrid resourceGrid;
     public SurfaceGrid surfaceGrid;
 
-    private bool isOnScanMode = false;
+    private bool isOnScanMode = true;
 
     // Graphic Raycaster code from https://docs.unity3d.com/2017.3/Documentation/ScriptReference/UI.GraphicRaycaster.Raycast.html
     GraphicRaycaster m_Raycaster;
