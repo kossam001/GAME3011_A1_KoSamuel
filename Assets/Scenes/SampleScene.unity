@@ -216,6 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 258011179}
   resourceGrid: {fileID: 1827349547}
+  surfaceGrid: {fileID: 604143491}
 --- !u!4 &258011178
 Transform:
   m_ObjectHideFlags: 0
@@ -326,7 +327,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 277221099}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 258011177}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: ChangeMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &277221099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,9 +524,9 @@ GameObject:
   m_Component:
   - component: {fileID: 604143486}
   - component: {fileID: 604143490}
-  - component: {fileID: 604143489}
   - component: {fileID: 604143488}
   - component: {fileID: 604143487}
+  - component: {fileID: 604143491}
   m_Layer: 5
   m_Name: SurfaceGrid
   m_TagString: Untagged
@@ -578,36 +591,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 32
---- !u!114 &604143489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604143485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &604143490
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -616,6 +599,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604143485}
   m_CullTransparentMesh: 0
+--- !u!114 &604143491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604143485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8bac0339fe4a6f43ac5221fb757a4f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 6410800129571535917, guid: 20217e6e2777df342a9a5fd01a6fc7cc, type: 3}
+  gridSize: 32
+  scanSize: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

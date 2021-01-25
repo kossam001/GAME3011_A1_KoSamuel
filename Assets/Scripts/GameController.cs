@@ -8,6 +8,9 @@ public class GameController : MonoBehaviour
 {
     public GameManager gameManager;
     public ResourceGrid resourceGrid;
+    public SurfaceGrid surfaceGrid;
+
+    private bool isOnScanMode = false;
 
     // Graphic Raycaster code from https://docs.unity3d.com/2017.3/Documentation/ScriptReference/UI.GraphicRaycaster.Raycast.html
     GraphicRaycaster m_Raycaster;
@@ -38,7 +41,7 @@ public class GameController : MonoBehaviour
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                if (result.gameObject.GetComponent<Resource>())
+                if (result.gameObject.GetComponent<Resource>() && !isOnScanMode)
                 {
                     Resource resource = result.gameObject.GetComponent<Resource>();
                     gameManager.AddScore((int)resource.resourceAmount);
@@ -46,7 +49,26 @@ public class GameController : MonoBehaviour
 
                     resourceGrid.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
                 }
+
+                SurfaceTile surface = result.gameObject.GetComponent<SurfaceTile>();
+                if (surface != null && !isOnScanMode)
+                {
+                    surface.RemoveTile();
+
+                    // There is a bug when it is possible to click two tiles simultaneously, using a break to fix it
+                }
+                else if (surface != null)
+                {
+                    surfaceGrid.RemoveSurroundingTiles((int)surface.tilePosition.x, (int)surface.tilePosition.y);
+
+                    // There is a bug when it is possible to click two tiles simultaneously, using a break to fix it
+                }
             }
         }
+    }
+
+    public void ChangeMode()
+    {
+        isOnScanMode = !isOnScanMode;
     }
 }
