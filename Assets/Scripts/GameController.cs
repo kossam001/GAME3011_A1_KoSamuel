@@ -38,30 +38,37 @@ public class GameController : MonoBehaviour
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(m_PointerEventData, results);
 
+            // Track raycast hit count so multiple tiles are not hit
+            int resourceHitCount = 0;
+            int surfaceHitCount = 0;
+
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                if (result.gameObject.GetComponent<Resource>() && !isOnScanMode)
+                if (result.gameObject.GetComponent<Resource>() && !isOnScanMode && resourceHitCount <= 0)
                 {
                     Resource resource = result.gameObject.GetComponent<Resource>();
                     gameManager.AddScore((int)resource.resourceAmount);
                     Vector2 resourcePosition = resource.DecrementResource();
 
                     resourceGrid.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
+
+                    resourceHitCount++;
                 }
 
                 SurfaceTile surface = result.gameObject.GetComponent<SurfaceTile>();
-                if (surface != null && !isOnScanMode)
+                if (surfaceHitCount <= 0 && surface != null)
                 {
-                    surface.RemoveTile();
+                    if (!isOnScanMode)
+                    {
+                        surface.RemoveTile();
+                    }
+                    else
+                    {
+                        surfaceGrid.RemoveSurroundingTiles((int)surface.tilePosition.x, (int)surface.tilePosition.y);
+                    }
 
-                    // There is a bug when it is possible to click two tiles simultaneously, using a break to fix it
-                }
-                else if (surface != null)
-                {
-                    surfaceGrid.RemoveSurroundingTiles((int)surface.tilePosition.x, (int)surface.tilePosition.y);
-
-                    // There is a bug when it is possible to click two tiles simultaneously, using a break to fix it
+                    surfaceHitCount++;
                 }
             }
         }
