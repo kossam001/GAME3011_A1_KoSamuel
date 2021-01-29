@@ -7,6 +7,9 @@ using TMPro;
 public class ModeButton : MonoBehaviour
 {
     public TMP_Text buttonLabel;
+    public TMP_Text scanLimitLabel;
+    public TMP_Text extractLmitLabel;
+
     private bool isScanMode = false;
 
     public int scanLimit = 6;
@@ -15,8 +18,11 @@ public class ModeButton : MonoBehaviour
     private void Start()
     {
         isScanMode = false;
-        buttonLabel.text = "EXTRACTx" + extractLimit.ToString();
+        buttonLabel.text = "EXTRACT";
         GetComponent<Image>().color = Color.red;
+
+        scanLimitLabel.text = scanLimit.ToString();
+        extractLmitLabel.text = extractLimit.ToString();
     }
 
     public void ChangeMode()
@@ -24,13 +30,13 @@ public class ModeButton : MonoBehaviour
         if (isScanMode)
         {
             isScanMode = false;
-            buttonLabel.text = "EXTRACTx" + extractLimit.ToString();
+            buttonLabel.text = "EXTRACT";
             GetComponent<Image>().color = Color.red;
         }
         else
         {
             isScanMode = true;
-            buttonLabel.text = "SCANx" + scanLimit.ToString();
+            buttonLabel.text = "SCAN";
             GetComponent<Image>().color = Color.green;
         }
     }
@@ -39,11 +45,11 @@ public class ModeButton : MonoBehaviour
     {
         if (isScanMode)
         {
-            buttonLabel.text = "SCANx" + (--scanLimit).ToString();
+            scanLimitLabel.text = (--scanLimit).ToString();
         }
         else
         {
-            buttonLabel.text = "EXTRACTx" + (--extractLimit).ToString();
+            extractLmitLabel.text = (--extractLimit).ToString();
         }
     }
 }
