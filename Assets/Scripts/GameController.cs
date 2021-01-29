@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
 
                 // Scan Mode
                 SurfaceTile surface = result.gameObject.GetComponent<SurfaceTile>();
-                if (surfaceHitCount <= 0 && surface != null)
+                if (surfaceHitCount <= 0 && surface != null && scanButton.extractLimit > 0)
                 {
                     if (!isOnScanMode)
                     {
