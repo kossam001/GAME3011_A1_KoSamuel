@@ -9,8 +9,9 @@ public class GameController : MonoBehaviour
     public GameManager gameManager;
     public ResourceGrid resourceGrid;
     public SurfaceGrid surfaceGrid;
+    public ModeButton scanButton;
 
-    private bool isOnScanMode = true;
+    private bool isOnScanMode = false;
 
     // Graphic Raycaster code from https://docs.unity3d.com/2017.3/Documentation/ScriptReference/UI.GraphicRaycaster.Raycast.html
     GraphicRaycaster m_Raycaster;
@@ -45,7 +46,8 @@ public class GameController : MonoBehaviour
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                if (result.gameObject.GetComponent<Resource>() && !isOnScanMode && resourceHitCount <= 0)
+                // Extract Mode
+                if (result.gameObject.GetComponent<Resource>() && !isOnScanMode && resourceHitCount <= 0 && scanButton.extractLimit > 0)
                 {
                     Resource resource = result.gameObject.GetComponent<Resource>();
                     gameManager.AddScore((int)resource.resourceAmount);
@@ -54,8 +56,10 @@ public class GameController : MonoBehaviour
                     resourceGrid.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
 
                     resourceHitCount++;
+                    scanButton.DecreaseUsage();
                 }
 
+                // Scan Mode
                 SurfaceTile surface = result.gameObject.GetComponent<SurfaceTile>();
                 if (surfaceHitCount <= 0 && surface != null)
                 {
@@ -63,9 +67,19 @@ public class GameController : MonoBehaviour
                     {
                         surface.RemoveTile();
                     }
-                    else
+                    else if (scanButton.scanLimit > 0)
                     {
                         surfaceGrid.RemoveSurroundingTiles((int)surface.tilePosition.x, (int)surface.tilePosition.y);
+
+                        scanButton.DecreaseUsage();
+
+                        if (scanButton.scanLimit <= 0)
+                        {
+                            scanButton.ChangeMode();
+                            scanButton.gameObject.GetComponent<Button>().interactable = false;
+                            isOnScanMode = false;
+                            break; // Without break, will consume an extract
+                        }
                     }
 
                     surfaceHitCount++;
@@ -76,6 +90,8 @@ public class GameController : MonoBehaviour
 
     public void ChangeMode()
     {
+        if (scanButton.scanLimit <= 0) return;
+
         isOnScanMode = !isOnScanMode;
     }
 }
