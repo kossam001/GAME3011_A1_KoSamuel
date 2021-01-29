@@ -244,8 +244,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5082c058b633b5d4ebbb66c1f8dff04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 258011177}
   resourceCanvas: {fileID: 1056543879}
   resultsPanel: {fileID: 1014868195}
+  scanButton: {fileID: 277221101}
   uiScore: {fileID: 399233233}
   scanLimitLabel: {fileID: 1846187625}
   extractLmitLabel: {fileID: 861533584}
