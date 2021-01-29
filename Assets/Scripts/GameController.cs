@@ -28,6 +28,11 @@ public class GameController : MonoBehaviour
         m_EventSystem = GetComponent<EventSystem>();
     }
 
+    public void Setup()
+    {
+        isOnScanMode = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -48,7 +53,7 @@ public class GameController : MonoBehaviour
             foreach (RaycastResult result in results)
             {
                 // Extract Mode
-                if (result.gameObject.GetComponent<Resource>() && !isOnScanMode && resourceHitCount <= 0 && scanButton.extractLimit > 0)
+                if (result.gameObject.GetComponent<Resource>() && !isOnScanMode && resourceHitCount <= 0 && gameManager.extractLimit > 0)
                 {
                     Resource resource = result.gameObject.GetComponent<Resource>();
                     gameManager.AddScore((int)resource.resourceAmount);
@@ -57,9 +62,9 @@ public class GameController : MonoBehaviour
                     resourceGrid.DecrementSurroundingResourceTiles((int)resourcePosition.x, (int)resourcePosition.y);
 
                     resourceHitCount++;
-                    scanButton.DecreaseUsage();
+                    gameManager.DecreaseUsage(isOnScanMode);
 
-                    if (scanButton.extractLimit <= 0)
+                    if (gameManager.extractLimit <= 0)
                     {
                         gameManager.FinishGame();
                     }
@@ -67,19 +72,19 @@ public class GameController : MonoBehaviour
 
                 // Scan Mode
                 SurfaceTile surface = result.gameObject.GetComponent<SurfaceTile>();
-                if (surfaceHitCount <= 0 && surface != null && scanButton.extractLimit > 0)
+                if (surfaceHitCount <= 0 && surface != null && gameManager.extractLimit > 0)
                 {
                     if (!isOnScanMode)
                     {
                         surface.RemoveTile();
                     }
-                    else if (scanButton.scanLimit > 0)
+                    else if (gameManager.scanLimit > 0)
                     {
                         surfaceGrid.RemoveSurroundingTiles((int)surface.tilePosition.x, (int)surface.tilePosition.y);
 
-                        scanButton.DecreaseUsage();
+                        gameManager.DecreaseUsage(isOnScanMode);
 
-                        if (scanButton.scanLimit <= 0)
+                        if (gameManager.scanLimit <= 0)
                         {
                             scanButton.ChangeMode();
                             scanButton.gameObject.GetComponent<Button>().interactable = false;
@@ -96,7 +101,7 @@ public class GameController : MonoBehaviour
 
     public void ChangeMode()
     {
-        if (scanButton.scanLimit <= 0) return;
+        if (gameManager.scanLimit <= 0) return;
 
         isOnScanMode = !isOnScanMode;
     }

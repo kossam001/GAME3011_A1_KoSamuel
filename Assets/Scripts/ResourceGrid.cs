@@ -14,7 +14,7 @@ public class ResourceGrid : MonoBehaviour
     private List<List<Resource>> resourceGrid;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Setup();
     }
@@ -38,12 +38,20 @@ public class ResourceGrid : MonoBehaviour
 
             resourceGrid.Add(resourceRow);
         }
-
-        SetResourceTiles();
     }
 
-    private void SetResourceTiles()
+    public void SetResourceTiles()
     {
+        // Reset Grid
+        for (int row = 0; row < gridSize; row++)
+        {
+            for (int col = 0; col < gridSize; col++)
+            {
+                resourceGrid[row][col].SetPosition(new Vector2(row, col));
+                resourceGrid[row][col].SetResource(0, 0);
+            }
+        }
+
         for (int i = 0; i < numDeposits; i++)
         {
             int row = Random.Range(0, gridSize - 1);

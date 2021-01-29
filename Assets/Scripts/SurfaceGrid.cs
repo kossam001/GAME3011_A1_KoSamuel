@@ -11,7 +11,7 @@ public class SurfaceGrid : MonoBehaviour
     private List<List<SurfaceTile>> surfaceGrid;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Setup();
     }
@@ -35,6 +35,17 @@ public class SurfaceGrid : MonoBehaviour
             }
 
             surfaceGrid.Add(surfaceRow);
+        }
+    }
+
+    public void Reset()
+    {
+        for (int row = 0; row < gridSize; row++)
+        {
+            for (int col = 0; col < gridSize; col++)
+            {
+                surfaceGrid[row][col].ResetTile();
+            }
         }
     }
 
