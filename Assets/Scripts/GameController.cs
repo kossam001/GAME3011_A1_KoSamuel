@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
@@ -57,6 +58,11 @@ public class GameController : MonoBehaviour
 
                     resourceHitCount++;
                     scanButton.DecreaseUsage();
+
+                    if (scanButton.extractLimit <= 0)
+                    {
+                        gameManager.FinishGame();
+                    }
                 }
 
                 // Scan Mode
