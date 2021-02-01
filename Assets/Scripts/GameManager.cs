@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameController gameController;
 
     public GameObject resourceCanvas;
+    public GameObject mainCanvas;
     public GameObject resultsPanel;
     public ModeButton scanButton;
 
@@ -63,6 +64,9 @@ public class GameManager : MonoBehaviour
         {
             if (!resourceCanvas.activeInHierarchy)
             {
+                // Turn off main canvas
+                mainCanvas.SetActive(false);
+
                 Setup();
                 resourceCanvas.SetActive(true);
                 resourceGrid.SetResourceTiles();
